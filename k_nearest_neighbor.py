@@ -1,4 +1,5 @@
 import numpy as np
+from collections import Counter
 """
 Credits: the original code belongs to Stanford CS231n course assignment1. Source link: http://cs231n.github.io/assignments2019/assignment1/
 """
@@ -144,6 +145,7 @@ class KNearestNeighbor:
         """
         num_test = dists.shape[0]
         y_pred = np.zeros(num_test)
+        #delete next line after you`re done testing
         for i in range(num_test):
             # A list of length k storing the labels of the k nearest neighbors to
             # the ith test point.
@@ -155,8 +157,12 @@ class KNearestNeighbor:
             # Hint: Look up the function numpy.argsort.                             #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-            closest_y = np.argsort(dists[i])
-
+            neighbors_ids = np.argsort(dists[i])
+            closest_y = list()
+            for j in range(k):
+              closest_y.append(self.y_train[neighbors_ids[j]])
+            #if i == 0:
+            #  print(closest_y)
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
             #########################################################################
             # TODO:                                                                 #
@@ -166,7 +172,8 @@ class KNearestNeighbor:
             # label.                                                                #
             #########################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            cnt = Counter(closest_y)
+            y_pred[i] = cnt.most_common(1)[0][0]
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-          return y_pred
+        
+        return y_pred
