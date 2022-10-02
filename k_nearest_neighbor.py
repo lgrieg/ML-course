@@ -98,9 +98,9 @@ class KNearestNeighbor:
             # Do not use np.linalg.norm().                                        #
             #######################################################################
             # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+            dists[i, :] = np.sqrt(np.sum(np.square(X[i, :] - self.X_train), axis = 1))
             # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-          return dists
+        return dists
 
     def compute_distances_no_loops(self, X):
         """
@@ -126,7 +126,7 @@ class KNearestNeighbor:
         #       and two broadcast sums.                                         #
         #########################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
+        dists = np.sqrt(np.sum(np.square(X), axis = 1, keepdims = True) + np.sum(np.square(self.X_train), axis = 1) - 2 * X.dot(self.X_train.T))
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         return dists
 
